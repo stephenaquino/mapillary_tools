@@ -33,7 +33,7 @@ def get_lat_lon_time_from_nmea(nmea_file: Path) -> T.List[geo.Point]:
 
     # Get initial date
     for l in lines:
-        if "GPRMC" in l:
+        if "GNRMC" in l:
             data = pynmea2.parse(l)
             date = data.datetime.date()
             break
@@ -41,11 +41,11 @@ def get_lat_lon_time_from_nmea(nmea_file: Path) -> T.List[geo.Point]:
     # Parse GPS trace
     points = []
     for l in lines:
-        if "GPRMC" in l:
+        if "GNRMC" in l:
             data = pynmea2.parse(l)
             date = data.datetime.date()
 
-        if "$GPGGA" in l:
+        if "$GNGGA" in l:
             data = pynmea2.parse(l)
             dt = datetime.datetime.combine(date, data.timestamp)
             lat, lon, alt = data.latitude, data.longitude, data.altitude
